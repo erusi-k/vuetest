@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>リアルタイム検索</title>
+</head>
+<body>
+    <div id ="app">
+        <real-serch></real-serch>
+    </div>
+    <script>
+        Vue.component('real-serch', {
+            template: `
+            <div>
+                <input type="text" v-model="keyword">
+                <ul>
+                    <li v-for="user in keywordCheck" :key="user.id">{{user.name}}</li>
+                </ul>
+            </div>
+            `,
+            data:function(){
+                return{
+                    users:[
+                        {name:'佐藤'},
+                        {name:'山田'},
+                        {name:'鈴木'},
+                        {name:'田中'}
+                        ],
+                    keyword:''
+                }
+            
+            },
+            computed:{
+                keywordCheck:function(){
+                    var users = [];
+
+                    for(var i  in this.users){
+                        var user = this.users[i];
+                        if(user.name.indexOf(this.keyword) !== -1){
+                            users.push(user);
+                        }
+                    }
+                    return users;
+                }
+            }
+        })
+        new Vue({
+            el:"#app"
+        })
+    </script>
+    <style>
+        ul {
+            list-style-type: none;
+            padding-left:0px;
+        }
+        input {
+            border:5px solid #66CC66;
+            border-radius:5px;
+            width:180px;
+            height:15px;
+        }
+    </style>
+</body>
+</html>

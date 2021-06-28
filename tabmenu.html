@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>vue.jsのサンプル</title>
+</head>
+<body>
+    <div id="app">
+        <ul class="tab">
+            <li  v-for="tab,key in tabs" :key="tab.id" :class="{active:activeTab === tab}" v-on:click="activeTab =tab;number =key" >{{tab}}</li>
+        </ul>
+        <tab-content v-bind:tab-number="number" ></tab-content>
+        
+    </div>
+    <script>
+        Vue.component("tab-content",{
+            props:{
+                tabNumber:{
+                    type:String
+                }
+            },
+            template:`
+                <p>コンテンツ{{tabNumber}}</p>
+            `
+        });
+        new Vue ({
+            el:"#app",
+            data:{
+                activeTab:"タグ１",
+                tabs:{
+                    1:'タグ１',
+                    2:'タグ２',
+                    3:'タグ３'
+                },
+                number:'1',
+                
+                methods: {
+                    tyu:function(number){
+                        return this.number = number;
+                    },
+
+                    activeChange:function(tab){
+                            this.activeTab = tab;
+                    }
+                }
+                
+            },
+            
+            
+        })
+    </script>
+    <style>
+        ul {
+            list-style-type: none;
+            
+        }
+        
+        .tab{
+            display:flex;
+            padding-left:0px;
+            text-align:center;
+        }
+
+        .tab li {
+            padding:10px;
+            border:1px solid #EEEEEE;
+            width:100px;
+            height:20px;
+        }
+
+
+
+        .active {
+            background:black;
+            color:#fff;
+        }
+
+        .content {
+            font-size:30px;
+            margin-top:0px;
+        }
+    </style>
+</body>
+</html>
